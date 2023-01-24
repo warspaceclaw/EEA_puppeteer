@@ -1,4 +1,4 @@
-# puppet-flashscore
+# EEA - PUPPET - FLASHSCORE
 Extraindo dados relacionados a gols no flashscore utilizando o Puppet.js
 Resolvi criar esse conjunto de arquivos, que juntos formam a Flashscore_Puppet, para ocupar minha mente com algo que gosto, realizando analise de jogos a partir dos gols.
 
