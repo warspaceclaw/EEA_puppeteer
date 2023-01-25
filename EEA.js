@@ -1,4 +1,4 @@
-//EEA - Erros e Acertos - Uma tentativa de apostas - o arquivo sofre alterações com frequência - #3 alteração
+//EEA - Erros e Acertos - Uma tentativa de apostas - o arquivo sofre alterações com frequência - #5 alteração no projeto original
 //warspaceclaw 
 //lennaym 
 const puppeteer = require('puppeteer');
@@ -6,7 +6,7 @@ const puppeteer = require('puppeteer');
 (async () => {
 
 
-    let sitelink = 'https://www.flashscore.com/match/lEjvlNH7/#/h2h/overall'
+    let sitelink = 'https://www.flashscore.com/match/hjgttQdQ/#/h2h/overall'//link do h2h
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
@@ -74,13 +74,9 @@ const puppeteer = require('puppeteer');
         var resultado_ebb = parseInt(resultados[9].substr(2, 2))
 
     }
+    //fim robo (das variaveis extraidas do site)]
 
-
-    // console.log(resultados)
-
-    //fim robo
-
-    //duas variaveis importantes, A e B. 
+    //duas variaveis importantes, A e B. (time A e B) e os calculos de média e variância
     {
         {
             let partida1 = resultado_aa + resultado_ab
@@ -91,11 +87,11 @@ const puppeteer = require('puppeteer');
 
             {
                 var somaTimeA = (partida1 + partida2 + partida3 + partida4 + partida5) / 5
-                var desvioMedioA = ((partida1 - somaTimeA) + (partida2 - somaTimeA) + (partida3 - somaTimeA) + (partida4 - somaTimeA) + (partida5 - somaTimeA)) / 5
+                var desvioMedioA = ((partida1 - somaTimeA) ^ 2 + (partida2 - somaTimeA) ^ 2 + (partida3 - somaTimeA) ^ 2 + (partida4 - somaTimeA) ^ 2 + (partida5 - somaTimeA) ^ 2) / 5
                 console.log(somaTimeA)
             }
         }
-
+        //parte B (time B)
         {
             let partida1 = resultado_aaa + resultado_abb
             let partida2 = resultado_baa + resultado_bbb
@@ -105,27 +101,42 @@ const puppeteer = require('puppeteer');
 
             {
                 var somaTimeB = (partida1 + partida2 + partida3 + partida4 + partida5) / 5
-                var desvioMedioB = ((partida1 - somaTimeB) + (partida2 - somaTimeB) + (partida3 - somaTimeB) + (partida4 - somaTimeB) + (partida5 - somaTimeB)) / 5
+                var desvioMedioB = ((partida1 - somaTimeB) ^ 2 + (partida2 - somaTimeB) ^ 2 + (partida3 - somaTimeB) ^ 2 + (partida4 - somaTimeB) ^ 2 + (partida5 - somaTimeB) ^ 2) / 5
                 console.log(somaTimeB)
             }
 
         }
+        //fim dos calculos e inicio dos console 
 
-        console.log('desvio padrão ' + (desvioMedioA + desvioMedioB) / 2)
+        console.log('variância ' + (desvioMedioA + desvioMedioB) / 2)
+
         //a chance do resultado do jogo ser menor que a média de gols do time A + Time B é definida pela Diferença da média de gols do Time A - Time B
         {
             //media da SomaTimeA + TimeB
             let mediaAB = (somaTimeA + somaTimeB) / 2
             console.log(mediaAB + ' media no jogo')
             //porcentagem do resultado ser igual a MEDIAAB
-            let resultado = 1 - ((somaTimeA - somaTimeB) * -1)
-            resultado = resultado * 100
 
-            console.log('--------------------------')
-            console.log('jogo entre ' + nomeTimeA + ' e ' + nomeTimeB)
-            console.log(resultado + ' %')
+            //let resultado = (1 - (somaTimeA - somaTimeB))
+
+
+            if ((somaTimeA - somaTimeB) < 0) {
+
+                let resultado = (1 + (somaTimeA - somaTimeB))
+
+                console.log('--------------------------')
+                console.log('jogo entre ' + nomeTimeA + ' e ' + nomeTimeB)
+                console.log((resultado * 100) + ' % de acontecer')
+            }
+            else {
+                resultado = (1 - (somaTimeA - somaTimeB))
+
+                console.log('--------------------------')
+                console.log('jogo entre ' + nomeTimeA + ' e ' + nomeTimeB)
+                console.log((resultado * 100) + ' % de acontecer')
+            }
+
         }
     }
     await browser.close();
 })();
-
